@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>WebApp</title>
+
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="fonts/style.css">
+
+
+	
+
+
+
+
+</head>
+<body>
+	<header>
+		<div class="layout-wrap">
+			<a href="#"><img src="img/logo-netcraft.svg" alt="netcraft"></a>
+
+			<form class="search-box">
+				<input type="search" name="q" placeholder="search">
+			</form>
+		</div>
+	</header>
+
+	<section class="page-body layout-wrap">
+		<div class="notifications"></div>
+
+		<nav>
+			<div class="nav-section report-new">
+				<p>Select <br> Reporting Platform</p>
+
+				<div class="menu">
+					<div class="menu-caption">
+						<p>Choose QS report</p>
+					</div>
+
+					<ul class="action-list">
+						<li><a href="#">Corporate</a></li>
+						<li><a href="#">Simple</a></li>
+						<li><a href="#">Business</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="nav-section report-top">
+				<p>Select <br> Dashboard </p>
+
+				<div class="menu">
+					<div class="menu-caption">
+						<p>Choose dashboard</p>
+					</div>
+
+					<ul class="action-list">
+					    <li><a href="#">Account Dashboard </a></li>
+						<li><a href="#">Daily Hudlle Dashboard</a></li>
+						<li><a href="#">Tier 2 Dashboard</a></li>
+						<li><a href="#">ADM Dashboardc</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="nav-section report-help">
+				<p>Help &amp; <br> Tutorials</p>
+
+				<div class="menu">
+					<div class="menu-caption">
+						<p>Choose guide</p>
+					</div>
+
+					<ul class="action-list">
+						<li><a href="#">Real Time</a></li>
+						<li><a href="#">Past Data</a></li>
+						<li><a href="#">Corporate Data</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<section class="tabs">
+			<ul>
+				<li class="tab-active"><a href="#quick-reports" title="Quick Reports" rel="quick-reports"><span class="icon-external-link"></span>  Quick Reports</a></li>
+				<li><a href="#my-folders" title="My Folders" rel="my-folders"><span class="icon-star-o"></span> My Folders</a></li>
+				<li><a href="#my-team-folders" title="My Team Folders" rel="my-team-folders"><span class="icon-folder-open-o"></span>  My Team Folders</a></li>
+				<li><a href="#public-folders" title="Public Folders" rel="public-folders"><span class="icon-copy"></span>   Public Folders</a></li>
+			</ul>
+
+			<div id="quick-reports">
+				<div class="tab-content">
+					
+
+						  <select class="bookmarks " name="bookmarks" id="bookmarks-quickreports"></select> 
+
+                                <label class="settings" for="set">
+									<img src="img/icons/settings.png">
+								</label>
+								<input type="checkbox" id="set">
+									<div class="expand">
+										<a href="" id="expand-url" target="_blank"><img src="img/icons/expand.png"></a>	
+									</div>
+                        
+
+                          <div id="quick-reports-form" class="quick-reports-settings">
+                                <form class="form-settings" id="quick-settings" runat="server">
+
+                                  <fieldset class="form-fieldset">
+                                    <div class="rprt-wrapper">
+                                 		
+                                        <span class="report-num ">Reprot 01</span>
+                                        
+                                       		
+                                              <label class=" rprt-label" for="nameReport1">Name</label>
+                                              <input class="rprt-input " placeholder="Site Name" id="nameReport1" type="text">
+                                     		
+                                     		
+                                            <label class=" rprt-label" for="urlReport1">URL</label>
+                                            <input class="rprt-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
+                                         
+                                      </div>
+                                    </fieldset>
+
+                                    <fieldset class="form-fieldset">
+                                      <div class="rprt-wrapper">
+                                        <span class="report-num">Reprot 02</span>
+                                       
+                                            <label class=" rprt-label" for="nameReport1">Name</label>
+                                            <input class="rprt-input" placeholder="Site Name" id="nameReport1" type="text">
+                                     
+                                            <label class=" rprt-label" for="urlReport1">URL</label>
+                                            <input class="rprt-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
+                                       </div>
+                                    </fieldset>
+
+                                    <fieldset class="form-fieldset">
+                                      <div class="rprt-wrapper">
+                                        <span class="report-num">Reprot 03</span>
+                                       
+                                            <label class=" rprt-label" for="nameReport1">Name</label>
+                                            <input class="rprt-input" placeholder="Site Name" id="nameReport1" type="text">
+                                     
+                                            <label class=" rprt-label" for="urlReport1">URL</label>
+                                            <input class="rprt-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
+                                       </div>
+                                    </fieldset>
+
+                                     <div class="form-footer">
+                            			<a href="#" id="quick-cancel">Cancel</a>
+                            			<input id="submit" value="Save" type="submit">
+                        			</div>
+                                    	<!-- <button class="quick-save" id="quick-save">Save</button>
+										<button class="quick-cancel" id="quick-cancel">Cancel</button> -->
+                                </form>
+                            </div>
+
+
+                        <div class="quick-content">
+                            <iframe class="iframe quick-iframe" src="" frameborder="0"></iframe>
+                        </div>
+
+
+             
+			</div>
+</div>
+			<div id="my-folders">
+				<div class="tab-content">
+				</div>
+			</div>
+
+			<div id="my-team-folders">
+			</div>
+
+			<div id="public-folders">
+			</div>
+		</section>
+</section>
+
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script>
+	
+</body>
+</html>
+
