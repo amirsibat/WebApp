@@ -202,9 +202,9 @@ nav :last-child{
 
 .nav-section > p{
     color: #fff;
-    font-size: 1.1em;
+    font-size: 1em;
     text-align: center;
-    margin-top: 0.5em;
+    margin-top: 0.8em;
 
 }
 
@@ -226,7 +226,6 @@ nav :last-child{
 }
 
 
-
 .menu{
     margin-top: 4.5em;
     background-color: #fff;
@@ -237,7 +236,7 @@ nav :last-child{
     color: black;
     margin-left: 5%;
     margin-bottom: 1px;
-    padding:0px;
+    padding:0;
     /*position: absolute;*/
     bottom: 0;
     width: 100%;
@@ -282,16 +281,17 @@ nav :last-child{
     width: 100%;
     text-align: left;
     position: absolute;
-    top: 160px;
+    top: 153px;
     z-index: 1;
     list-style-type: none;
-    margin-top: 0;
+    margin-top: 0px;
 }
+
 .action-list > li{
     background: white;
     border-bottom: 1px solid rgb(235, 235, 235);
     padding: 0.7em;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .action-list  li:last-child{
@@ -352,7 +352,7 @@ nav :last-child{
     display: block;
     color: #EBEBEB;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 
@@ -371,15 +371,9 @@ nav :last-child{
 
 }
 
-.iframe{
-
-    height: 90%;
-    width:100%;
-}
 
 
-
-.settings{
+/*.settings{
     float: right;
     cursor: pointer;
     padding-left: 0.6em;
@@ -388,19 +382,21 @@ nav :last-child{
     width: 26px;
     height: 27px;
     padding: 0.6em;
-    margin-right: 0.8em;
+    margin-right: 1.1em;
 
 }
 .settings img{
     margin-top: 0.5em;
-    
+}
 
+.settings:hover, .active{
+     background-color: #FFF !important;
 }
 
 #set{
     display: none;
 }
-#set:checked ~ .quick-reports-settings{
+#set:checked ~ .reports-options-settings{
     display: block;
 }
 
@@ -415,8 +411,14 @@ nav :last-child{
     margin-top: 0.8em;
 }
 
+.expand:hover{
+     background-color: #FFF !important;
+}
 
-.quick-reports-settings {
+*/
+
+
+/*.quick-reports-settings {
     display: none;
     margin-top: 1.5em;
     background-color: white;
@@ -426,9 +428,9 @@ nav :last-child{
     margin-left: 0.8em;
     height: 218px;
    
-}
+}*/
 
-.form-feildset span{
+/*.form-feildset span{
     color: rgb(60, 60, 60);
 }
 
@@ -492,7 +494,174 @@ nav :last-child{
     color: white;
     height: 23px;
     width: 80px;
+}*/
+
+.tab {
+    background: #ebebeb none repeat scroll 0 0;
+    position: relative;
 }
+
+.tab, .iframe, fieldset.fs-settings {
+    width: 100%;
+    height: 98%;
+}
+
+.iframe-quickreports, .iframe-teamfolders, .iframe-myfolders{
+    margin-top: 0.5em;
+}
+
+.iframe-content {
+    height: 40em;
+    padding-top: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+}
+
+
+.reports-options-buttons a.btn-expand {
+    background-image: url("../img/icons/expand.png");
+    right: 40px;
+    margin-top: 20px;
+    right: 20px;
+}
+
+.reports-options-buttons a.btn-expand:hover {
+    background-color:#FFF;
+}
+
+.reports-options-buttons a, .reports-options-buttons button {
+    background-color: #ebebeb;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    position: absolute;
+    text-indent: -9999px;
+    width: 40px;
+    height:40px;
+    z-index: 1;
+}
+
+.bookmarks{
+    display: inline-block;
+    height: 35px;
+    margin: 16px;
+    padding-left: 16px;
+    position: absolute;
+    width: 250px;
+    background-color: white;
+}
+
+.expand-toleft{
+    right:60px !important;
+    margin-top:18px !important;
+}
+
+.expand-right-corner{
+    margin-right: -2.3em;
+}
+
+.reports-options-buttons button.btn-settings{
+    background-image: url("../img/icons/settings.png");
+    right: 0;
+    border: medium none;
+    margin-top: 18px;
+    right: 16px;
+    border:none;
+    cursor: pointer;
+}
+
+.reports-options-buttons button.btn-settings:hover, .active{
+    background-color: #FFF !important;
+}
+
+.settings {
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 2px 6px 2px rgba(50, 50, 50, 0.3);
+    /*height: 260px;*/
+    left: 0;
+    margin: 0 0 0 16px;
+    overflow: hidden;
+    padding: 16px;
+    position: absolute;
+    right: 16px;
+    top: 58px;
+}
+
+.form-fieldset {
+    background-color: #dcdada;
+    font-size: 1.1rem;
+    height: 35px;
+    padding: 7px 1.51515%;
+    position: relative;
+    margin-bottom: 16px;
+    border:0 none;
+}
+
+.report-num {
+    position: absolute;
+    top: 15px;
+
+}
+
+.rpt-name {
+    left: 16%;
+    width: 37%;
+}
+
+.rpt-url{
+    left: 59.5%;
+    width: 40%;
+}
+
+.rep-name .rep-label {
+    right: 78%;
+}
+.rep-label {
+    position: absolute;
+    top: 21%;
+}
+
+.url-input{
+   width: 64% !important; 
+   left: 12% !important;
+}
+
+.rep-input {
+    left: 15%;
+    width: 70%;
+}
+.rep-input {
+    border: medium none;
+    direction: ltr;
+    font-size: 0.8rem;
+    height: 32px;
+    padding: 0 4%;
+    position: inherit;
+}
+
+.input-wrapper {
+    height: 36px;
+    position: absolute;
+}
+
+.form-footer{
+    float: right;
+    font-size: 0.9rem;
+}
+
+.form-footer a {
+    color: black;
+    margin-right: 15px;
+}
+
+.form-footer input[type="submit"] {
+    background-color: black;
+    border: 0 none;
+    color: white;
+    height: 30px;
+    width: 100px;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
