@@ -40,7 +40,7 @@ var UTILS = (function () {
             } else if (window.attachEvent) {
                 // IE8 and below
                 // Required for normalizing the "event" object
-        ieHandler = function (e) {
+                ieHandler = function (e) {
                     e.target = e.target || e.srcElement;
                     e.currentTarget = e.currentTarget || elm;
 
@@ -172,9 +172,11 @@ var UTILS = (function () {
             xhr.send(null);
         },
 
-        
+        // make ajax GET request and read json file for notifications
+        getDataRequest: function(){
 
+        UTILS.ajax('data/config.json');
+      
+    }
     };
 }());
-
-
