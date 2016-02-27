@@ -29,153 +29,216 @@
 	</header>
 
 	<section class="page-body layout-wrap">
-		<div class="notifications"></div>
+		<div class="notifications hidden"></div>
 
 		<nav>
 			<div class="nav-section report-new">
-				<p>Select <br> Reporting Platform</p>
+				<!-- <p>Select <br> Reporting Platform</p> -->
 
 				<div class="menu">
 					<div class="menu-caption">
-						<p>Choose QS report</p>
+						<!-- <p>Choose QS report</p> -->
 					</div>
 
 					<ul class="action-list">
-						<li><a href="#">Corporate</a></li>
+						<!-- <li><a href="#">Corporate</a></li>
 						<li><a href="#">Simple</a></li>
-						<li><a href="#">Business</a></li>
+						<li><a href="#">Business</a></li> -->
 					</ul>
 				</div>
 			</div>
 
 			<div class="nav-section report-top">
-				<p>Select <br> Dashboard </p>
+				<!-- <p>Select <br> Dashboard </p> -->
 
 				<div class="menu">
 					<div class="menu-caption">
-						<p>Choose dashboard</p>
+						<!-- <p>Choose dashboard</p> -->
 					</div>
 
 					<ul class="action-list">
-					    <li><a href="#">Account Dashboard </a></li>
+					    <!-- <li><a href="#">Account Dashboard </a></li>
 						<li><a href="#">Daily Hudlle Dashboard</a></li>
 						<li><a href="#">Tier 2 Dashboard</a></li>
-						<li><a href="#">ADM Dashboardc</a></li>
+						<li><a href="#">ADM Dashboardc</a></li> -->
 					</ul>
 				</div>
 			</div>
 
 			<div class="nav-section report-help">
-				<p>Help &amp; <br> Tutorials</p>
+				<!-- <p>Help &amp; <br> Tutorials</p> -->
 
 				<div class="menu">
 					<div class="menu-caption">
-						<p>Choose guide</p>
+						<!-- <p>Choose guide</p> -->
 					</div>
 
 					<ul class="action-list">
-						<li><a href="#">Real Time</a></li>
+						<!-- <li><a href="#">Real Time</a></li>
 						<li><a href="#">Past Data</a></li>
-						<li><a href="#">Corporate Data</a></li>
+						<li><a href="#">Corporate Data</a></li> -->
 					</ul>
 				</div>
 			</div>
 		</nav>
 
 		<section class="tabs">
-			<ul>
-				<li class="tab-active"><a href="#quick-reports" title="Quick Reports" rel="quick-reports"><span class="icon-external-link"></span>  Quick Reports</a></li>
-				<li><a href="#my-folders" title="My Folders" rel="my-folders"><span class="icon-star-o"></span> My Folders</a></li>
-				<li><a href="#my-team-folders" title="My Team Folders" rel="my-team-folders"><span class="icon-folder-open-o"></span>  My Team Folders</a></li>
-				<li><a href="#public-folders" title="Public Folders" rel="public-folders"><span class="icon-copy"></span>   Public Folders</a></li>
+			<ul id="tabs-list">
+				<li class="tab-active"><a href="#quick-reports" class="tabs-links" title="Quick Reports" rel="quick-reports"><span class="icon-external-link"></span>  Quick Reports</a></li>
+				<li><a href="#my-folders" title="My Folders" class="tabs-links" rel="my-folders"><span class="icon-star-o"></span> My Folders</a></li>
+				<li><a href="#my-team-folders" title="My Team Folders" class="tabs-links" rel="my-team-folders"><span class="icon-folder-open-o"></span>  My Team Folders</a></li>
+				<li><a href="#public-folders" title="Public Folders" class="tabs-links" rel="public-folders"><span class="icon-copy"></span>   Public Folders</a></li>
 			</ul>
 
-			<div id="quick-reports">
-				<div class="tab-content">
-					
+			 <div class="tab" id="quick-reports">
 
-						  <select class="bookmarks " name="bookmarks" id="bookmarks-quickreports"></select> 
+                        <div class="reports-options">
+                            <select class="bookmarks hidden" name="bookmarks" id="bookmarks-quickreports"  >
+                            </select>
 
-                                <label class="settings" for="set">
-									<img src="img/icons/settings.png">
-								</label>
-								<input type="checkbox" id="set">
-									<div class="expand">
-										<a href="" id="expand-url" target="_blank"><img src="img/icons/expand.png"></a>	
-									</div>
-                        
+                            <div class="reports-options-buttons">
+                                <a class="btn-expand hidden expand-toleft" target="_blank" href="#" id="expand-quickreports">e</a>
+                                <button class="btn-settings" id="btnSettings-quickreports">s</button>
+                            </div>
+                            <div id="quick-reports-settings-form" class="settings hidden">
+                                <form class="frmSettings" id="quickreports" runat="server">
 
-                          <div id="quick-reports-form" class="quick-reports-settings">
-                                <form class="form-settings" id="quick-settings" runat="server">
-
-                                  <fieldset class="form-fieldset">
-                                    <div class="rprt-wrapper">
-                                 		
-                                        <span class="report-num ">Reprot 01</span>
-                                        
-                                       		
-                                              <label class=" rprt-label" for="nameReport1">Name</label>
-                                              <input class="rprt-input " placeholder="Site Name" id="nameReport1" type="text">
-                                     		
-                                     		
-                                            <label class=" rprt-label" for="urlReport1">URL</label>
-                                            <input class="rprt-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
-                                         
-                                      </div>
+                                    <fieldset class="form-fieldset">
+                                        <span class="report-num">Reprot 01</span>
+                                        <div class="input-wrapper rpt-name">
+                                            <label class=" rep-label" for="nameReport1">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text">
+                                        </div>
+                                        <div class="input-wrapper rpt-url">
+                                            <label class=" rep-label" for="urlReport1">URL</label>
+                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
+                                        </div>
                                     </fieldset>
 
                                     <fieldset class="form-fieldset">
-                                      <div class="rprt-wrapper">
                                         <span class="report-num">Reprot 02</span>
-                                       
-                                            <label class=" rprt-label" for="nameReport1">Name</label>
-                                            <input class="rprt-input" placeholder="Site Name" id="nameReport1" type="text">
-                                     
-                                            <label class=" rprt-label" for="urlReport1">URL</label>
-                                            <input class="rprt-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
-                                       </div>
+                                        <div class="input-wrapper rpt-name">
+                                            <label class=" rep-label" for="nameReport2">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport2" type="text">
+                                        </div>
+                                        <div class="input-wrapper rpt-url">
+                                            <label class=" rep-label" for="urlReport2">URL</label>
+                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport2" type="url" pattern="https?://.+">
+                                        </div>
                                     </fieldset>
 
                                     <fieldset class="form-fieldset">
-                                      <div class="rprt-wrapper">
                                         <span class="report-num">Reprot 03</span>
-                                       
-                                            <label class=" rprt-label" for="nameReport1">Name</label>
-                                            <input class="rprt-input" placeholder="Site Name" id="nameReport1" type="text">
-                                     
-                                            <label class=" rprt-label" for="urlReport1">URL</label>
-                                            <input class="rprt-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
-                                       </div>
+                                        <div class="input-wrapper rpt-name">
+                                            <label class=" rep-label" for="nameReport3">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport3" type="text">
+                                        </div>
+                                        <div class="input-wrapper rpt-url">
+                                            <label class=" rep-label" for="urlReport3">URL</label>
+                                            <input type="url" class="rep-input url-input" id="urlReport3" placeholder="Site Url" pattern="https?://.+">
+                                        </div>
                                     </fieldset>
 
-                                     <div class="form-footer">
-                            			<a href="#" id="quick-cancel">Cancel</a>
-                            			<input id="submit" value="Save" type="submit">
-                        			</div>
-                                    	<!-- <button class="quick-save" id="quick-save">Save</button>
-										<button class="quick-cancel" id="quick-cancel">Cancel</button> -->
+                                    <div class="form-footer">
+                                        <a href="#" id="cancel-quick-reports">Cancel</a>
+                                        <input id="submit" value="Save" type="submit">
+                                    </div>
+                                    
                                 </form>
                             </div>
-
-
-                        <div class="quick-content">
-                            <iframe class="iframe quick-iframe" src="" frameborder="0"></iframe>
                         </div>
+                        <div class="iframe-content">
+                            <iframe class="iframe iframe-quickreports" id="quickreports-frame" src="" frameborder="0"></iframe>
+                        </div>
+                    </div>
 
 
-             
-			</div>
-</div>
-			<div id="my-folders">
+
+			<div  class="tab hidden" id="my-folders">
 				<div class="tab-content">
+						<div class="reports-options-buttons">
+                             <a class="btn-expand expand-toleft expand-right-corner" target="_blank" href="http://www.paulirish.com/" id="expand-quickreports">e</a>
+                             </div>
+						<div class="iframe-content">
+	                            <iframe class="iframe iframe-myfolders" src="http://www.paulirish.com/" id="myfolders-frame" frameborder="0" name="iframe"></iframe>
+	                        </div>
 				</div>
 			</div>
 
-			<div id="my-team-folders">
+
+
+			<div class="tab hidden" id="my-team-folders">
+				<div class="reports-options">
+                            <select class="bookmarks hidden" name="bookmarks" id="bookmarks-quickreports"  >
+                            </select>
+
+                            <div class="reports-options-buttons">
+                                <a class="btn-expand hidden expand-toleft" target="_blank" href="#" id="expand-quickreports">e</a>
+                                <button class="btn-settings" id="btnSettings-teamfolders">s</button>
+                            </div>
+                            <div id="team-folders-settings-form" class="settings hidden">
+                                <form class="frmSettings" id="teamfolders-reports" runat="server">
+
+                                    <fieldset class="form-fieldset">
+                                        <span class="report-num">Reprot 01</span>
+                                        <div class="input-wrapper rpt-name">
+                                            <label class=" rep-label" for="nameReport1">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text">
+                                        </div>
+                                        <div class="input-wrapper rpt-url">
+                                            <label class=" rep-label" for="urlReport1">URL</label>
+                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset class="form-fieldset">
+                                        <span class="report-num">Reprot 02</span>
+                                        <div class="input-wrapper rpt-name">
+                                            <label class=" rep-label" for="nameReport2">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport2" type="text">
+                                        </div>
+                                        <div class="input-wrapper rpt-url">
+                                            <label class=" rep-label" for="urlReport2">URL</label>
+                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport2" type="url" pattern="https?://.+">
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset class="form-fieldset">
+                                        <span class="report-num">Reprot 03</span>
+                                        <div class="input-wrapper rpt-name">
+                                            <label class=" rep-label" for="nameReport3">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport3" type="text">
+                                        </div>
+                                        <div class="input-wrapper rpt-url">
+                                            <label class=" rep-label" for="urlReport3">URL</label>
+                                            <input type="url" class="rep-input url-input" id="urlReport3" placeholder="Site Url" pattern="https?://.+">
+                                        </div>
+                                    </fieldset>
+
+                                    <div class="form-footer">
+                                        <a href="#" id="cancel-team-folders">Cancel</a>
+                                        <input id="submit" value="Save" type="submit">
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                        <div class="iframe-content">
+                            <iframe class="iframe iframe-teamfolders" id="teamfolders-frame" src="" frameborder="0"></iframe>
+                        </div>
 			</div>
 
-			<div id="public-folders">
+			<div class="tab hidden" id="public-folders">
+				<div class="tab-content">
+						<div class="reports-options-buttons">
+                             <a class="btn-expand expand-toleft expand-right-corner" target="_blank" href="http://www.paulirish.com/" id="expand-quickreports">e</a>
+                             </div>
+						<div class="iframe-content">
+	                            <iframe class="iframe iframe-myfolders" src="http://www.paulirish.com/" id="myfolders-frame" frameborder="0" name="iframe"></iframe>
+	                        </div>
+				</div>
 			</div>
+
 		</section>
 </section>
 
