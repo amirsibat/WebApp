@@ -6,6 +6,11 @@ function all(selector) {
     return document.querySelectorAll(selector);
 }
 
+function remove(element) {
+    element.parentNode.removeChild(element);
+}
+
+
 var addEventListener = function(obj, evt, fnc) {
 if (document.addEventListener) {
     var addEvent = function(elem, type, handler) {
@@ -114,15 +119,15 @@ function getActiveTabIndex(Tabs){
 
 
 function setIframe (val,id) {
-    $('.iframe-'+id).attr( 'src' , val );
-    $('#expand-'+id).attr( 'href', val );  
+    $('.iframe-'+id).setAttribute( 'src' , val );
+    $('#expand-'+id).setAttribute( 'href', val );  
 }
 
 var selectOptionChange = function  (e) {
     e.preventDefault();
     var target = e.target;
     var optionValue = target.options[target.selectedIndex].value;
-    var id = $('#'+target.id).parent().parent().find("form").first().attr('id');
+    var id = $('#'+target.id).parentNode.parentNode.querySelectorAll("form")[0].getAttribute('id');
     setIframe(optionValue,id);
 }
 
@@ -136,22 +141,61 @@ function hideSelectButtonAndIframe (id) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+function addSelectToDropDownList ($selectElement ,name,url) {
+    var $option = document.createElement('option');
+        $option.setAttribute( 'value',url );
+        $option.textContent = name;
+        $selectElement.appendChild($option);
+}
+
+function setIframe (val,id) {
+    $('.iframe-'+id).setAttribute( 'src' , val );
+    $('#expand-'+id).setAttribute( 'href', val );  
+}
+
+
+function showSelectButtonAndIframe (id) {
+     $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.remove('hidden'); 
+}
+
+
+function hideSelectButtonAndIframe (argument) {
+    $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.add('hidden');
+}
+
+
 function saveToLocalStorage () {
      if (typeof(Storage) !== "undefined"){
 
             var arr = [];
+            var $frmsettings =  document.getElementsByClassName('frmSettings');
 
-            $('.frmSettings').each( function(index, element){
+            Array.prototype.forEach.call( $frmsettings, function(index, element){
                 
-                $inputsName = $(this).find('input[type="text"]'),
-                $inputsUrl = $(this).find('input[type="url"]');
-                var formId = $(this).attr('id');
+                $inputsName = this.all('input[type="text"]'),
+                $inputsUrl = this.all('input[type="url"]');
+
+                var formId = $frmsettings[0].getAttribute('id');
+                
                 for (var i = 0; i < $inputsName.length; i++) {
 
-                url = $inputsUrl.eq(i).val();
-                name = $inputsName.eq(i).val();
-                nameElemId = $inputsName.eq(i).attr('id');
-                urlElemId = $inputsUrl.eq(i).attr('id');
+                url = $inputsUrl[i].value;
+                name = $inputsName[i].value;
+                nameElemId = $inputsName[i].getAttribute('id');
+                urlElemId = $inputsUrl[i].getAttribute('id');
 
                 arr.push({
                     formId: formId,
@@ -177,15 +221,14 @@ function saveToLocalStorage () {
 }
 
 
-
 function loadFromLocalStorage () {
     if (typeof(Storage) !== "undefined") {
         var storageData = JSON.parse(localStorage.getItem('storage'));
 
         if(storageData !== null){
             for(var i=0; i<storageData.length; i++){
-                $('#'+storageData[i].nameElemId).val(storageData[i].name);
-                $('#'+storageData[i].urlElemId).val(storageData[i].url);
+                $('#'+storageData[i].nameElemId).valueOf(storageData[i].name);
+                $('#'+storageData[i].urlElemId).valueOf(storageData[i].url);
             }
         }
 
@@ -198,26 +241,34 @@ function loadFromLocalStorage () {
 }
 
 
-function submitForm (e) {
-    e.preventDefault();
-        var $form = $(e.target),
-            $bookmark = $( '#bookmarks-' + $form.attr('id') ).eq(0),
-            $inputsName = $form.find('input[type="text"]'),
-            $inputsUrl = $form.find('input[type="url"]');
 
+function submitForm (e) {
+     e.preventDefault();
+     var $form = e.target,
+            $bookmark = all('#bookmarks-' + $form.getAttribute('id'))[0],
+            $inputsName = $form.querySelectorAll('input[type="text"]'),
+            $inputsUrl = $form.querySelectorAll('input[type="url"]');
+    
             var nameVal , urlVal, emptyCounter = 0;
             
             //reset bookmark
-            $bookmark.find('option').remove();
+             if($bookmark.length != 0){
+             for (var i=0; i<$bookmark.length; i++){
+                    $bookmark.options.remove(i);
+                }
+
+            }
+
+
 
             for (var i = 0; i < $inputsName.length; i++) {
-            url = $inputsUrl.eq(i).val();
-            name = $inputsName.eq(i).val();
+            url = $inputsUrl[i].value;
+            name = $inputsName[i].value;
             
 
             // check if not empty and add to bookmark
             if(name !== '' && url !== '' ){
-                UTILS.addSelectToDropDownList($bookmark,name,url);
+                    addSelectToDropDownList($bookmark,name,url);
             }
             else{
                 emptyCounter++;
@@ -229,67 +280,46 @@ function submitForm (e) {
                 if(emptyCounter != 3){
 
                     $bookmark.focus();
-                    UTILS.setIframe($bookmark.children(0).attr('value'), $form.attr('id'));
-                    $('#btnSettings-'+ $form.attr('id')).click();
-                    UTILS.showSelectButtonAndIframe($form.attr('id'));
+                         setIframe( $bookmark.getElementsByTagName("option")[0].attributes[0].value, $form.getAttribute('id'));
+                    $('#btnSettings-'+ $form.getAttribute('id')).click();
+                        showSelectButtonAndIframe($form.getAttribute('id'));
                 }
                 else{
-                    $bookmark.find('option').remove();
-                    UTILS.hideSelectButtonAndIframe($form.attr('id'));
+                    // $bookmark.find('option').remove();
+                        for (var i=0; i<$bookmark.length; i++){
+                                $bookmark.options.remove(i);
+                          }
+                        hideSelectButtonAndIframe($form.getAttribute('id'));
                 }
 
-            UTILS.saveToLocalStorage();
+            saveToLocalStorage();
 
             return true;
- 
-}
 
 
-function addSelectToDropDownList ($selectElement ,name,url) {
-    var $option = $( '<option></option>' );
-        $option.attr( 'value',url );
-        $option.text(name);
-        $selectElement.append($option);
 }
 
 
 
-function initRequiredInputsDependencies (form) {
-    var $form = $(form),
-            $inputsName = $form.find('input[type="text"]'),
-            $inputsUrl = $form.find('input[type="url"]');
 
-            for (var i = 0; i < $inputsName.length; i++) {
 
-            $inputsUrl.eq(i).bind('input', { inputsName: $inputsName, i: i } ,function(e) {
-                if( $(this).val() !== '') 
-                    e.data.inputsName.eq(e.data.i).prop('required',true);
-                else
-                    e.data.inputsName.eq(e.data.i).prop('required',false);
-            });
-
-            $inputsName.eq(i).bind('input', { inputsUrl: $inputsUrl, i: i } ,function(e) { 
-                if( $(this).val() !== '')
-                    e.data.inputsUrl.eq(e.data.i).prop('required',true);
-                else
-                    e.data.inputsUrl.eq(e.data.i).prop('required',false);
-            });             
-
-            } 
-}
 
 
 
 function initialize(){
 
+        //localStorage.clear();
      // UTILS.getDataRequest();
-    UTILS.ajax("data/config.json", {done: updateNotification});
+    // UTILS.ajax("data/config.json", {done: updateNotification});
 
     document.getElementById("btnSettings-quickreports").addEventListener('click', function(e){
        
         $("#btnSettings-quickreports").classList.toggle('active') ;
         // show the feildset content
         $("#quick-reports-settings-form").classList.toggle('hidden');
+        // Set initial focus
+        document.getElementById("nameReport1").focus();
+
         
     });
 
@@ -298,6 +328,9 @@ function initialize(){
         $("#btnSettings-teamfolders").classList.toggle('active') ;
         // show the feildset content
         $("#team-folders-settings-form").classList.toggle('hidden');
+
+
+
         
     });
 
@@ -314,6 +347,12 @@ function initialize(){
 
     });
 
+
+    document.getElementById('quickreports').addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitForm(e);
+    });
+    
     //select options updates
     for(var i = 0; i < 2; i++){
         // $('.bookmarks').eq(i).change(selectOptionChange);
@@ -322,6 +361,7 @@ function initialize(){
 
     loadFromLocalStorage();
 }
+
 
 
 
