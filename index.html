@@ -93,6 +93,7 @@
 			 <div class="tab" id="quick-reports">
 
                         <div class="reports-options">
+                        	<label class="hidden" for="bookmarks-quickreports">select</label>
                             <select class="bookmarks hidden" name="bookmarks" id="bookmarks-quickreports"  >
                             </select>
 
@@ -106,12 +107,12 @@
                                     <fieldset class="form-fieldset">
                                         <span class="report-num">Reprot 01</span>
                                         <div class="input-wrapper rpt-name">
-                                            <label class=" rep-label" for="nameReport1">Name</label>
-                                            <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text">
+                                            <label class="rep-label" for="nameReport1">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text" required>
                                         </div>
                                         <div class="input-wrapper rpt-url">
                                             <label class=" rep-label" for="urlReport1">URL</label>
-                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
+                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+" required>
                                         </div>
                                     </fieldset>
 
@@ -119,7 +120,7 @@
                                         <span class="report-num">Reprot 02</span>
                                         <div class="input-wrapper rpt-name">
                                             <label class=" rep-label" for="nameReport2">Name</label>
-                                            <input class="rep-input" placeholder="Site Name" id="nameReport2" type="text">
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport2" type="text" >
                                         </div>
                                         <div class="input-wrapper rpt-url">
                                             <label class=" rep-label" for="urlReport2">URL</label>
@@ -147,7 +148,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="iframe-content">
+                        <div class="iframe-content content-quickreports">
                             <iframe class="iframe iframe-quickreports" id="quickreports-frame" src="" frameborder="0"></iframe>
                         </div>
                     </div>
@@ -223,7 +224,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="iframe-content">
+                        <div class="iframe-content content-my-team-folders">
                             <iframe class="iframe iframe-teamfolders" id="teamfolders-frame" src="" frameborder="0"></iframe>
                         </div>
 			</div>
