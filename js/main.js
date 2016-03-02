@@ -32,7 +32,7 @@ if (document.addEventListener) {
 
 function updatePage(data){
     updateNotification(data.notification);
-    updateQuickActions(data.actions);
+    updateQuickActions(data.quickActions);
 }
 
 
