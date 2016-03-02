@@ -80,14 +80,16 @@ function updatePageData(data){
 var set_tab = function(){
         var tabsList =document.getElementsByClassName("tabs-links");
         // current tab hash
-        var active=this.hash;
+        var current = this.hash;
 
     for (var i = 0; i < tabsList.length; i++) {
-        if (tabsList[i].hash == active) {
-          x=tabsList[i].parentNode;
+        if (tabsList[i].hash == current) {
+          var x = tabsList[i].parentNode;
+
           // set the tab toggle class to be active-tab
           x.className+=' tab-active';
         } else {
+
           // remove the tab-active class from the other tabs
           x=tabsList[i].parentNode;
           x.className='';
@@ -96,7 +98,7 @@ var set_tab = function(){
         }
       }
     // show current tab content
-     $(active).classList.remove('hidden');
+     $(current).classList.remove('hidden');
 
 
 };
@@ -105,12 +107,16 @@ var tabs =document.getElementsByClassName("tabs-links");
 
 for (var i = 0; i < tabs.length; i++) {
     tabs[i].addEventListener("click", set_tab);
-  };
+  }
+
+
+
+
 
 
 function getActiveTabIndex(Tabs){
     for (var i = 0; i < Tabs.length; i++) {
-        if(Tabs[i].getAttribute('class') == 'active'){
+        if(Tabs[i].getAttribute('class') == 'tab-active'){
             return i;
         }
     }
@@ -139,12 +145,6 @@ function showSelectButtonAndIframe (id) {
 function hideSelectButtonAndIframe (id) {
     $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.toggle('hidden');
 }
-
-
-
-
-
-
 
 
 
@@ -300,7 +300,30 @@ function submitForm (e) {
 }
 
 
+function formValidation(form){
+        var $form = $(form),
+            $inputsName = $form.querySelectorAll('input[type="text"]'),
+            $inputsUrl = $form.querySelectorAll('input[type="url"]');
 
+            for (var i = 0; i < $inputsName.length; i++) {
+
+            $inputsUrl[i].addEventListener('input', { inputsName: $inputsName, i: i } ,function(e) {
+                if( $(this).value != '' || $(this).value != null ) 
+                    e.data.inputsName[e.data.i].prop('required',true);
+                else
+                    e.data.inputsName[e.data.i].prop('required',false);
+            });
+
+            $inputsName[i].addEventListener('input', { inputsUrl: $inputsUrl, i: i } ,function(e) { 
+                if( $(this).value != '' || $(this).value != null )
+                    e.data.inputsUrl[e.data.i].prop('required',true);
+                else
+                    e.data.inputsUrl[e.data.i].prop('required',false);
+            });             
+
+            }
+
+}
 
 
 
@@ -310,7 +333,7 @@ function initialize(){
 
         //localStorage.clear();
      // UTILS.getDataRequest();
-    // UTILS.ajax("data/config.json", {done: updateNotification});
+    UTILS.ajax("data/config.json", {done: updateNotification});
 
     document.getElementById("btnSettings-quickreports").addEventListener('click', function(e){
        
@@ -323,9 +346,9 @@ function initialize(){
         
     });
 
-     document.getElementById("btnSettings-teamfolders").addEventListener('click', function(e){
+     document.getElementById("btnSettings-teamfolders-reports").addEventListener('click', function(e){
        
-        $("#btnSettings-teamfolders").classList.toggle('active') ;
+        $("#btnSettings-teamfolders-reports").classList.toggle('active') ;
         // show the feildset content
         $("#team-folders-settings-form").classList.toggle('hidden');
 
@@ -343,16 +366,22 @@ function initialize(){
     // my team folders setting cancel 
     document.getElementById("cancel-team-folders").addEventListener('click',function(e){
         e.preventDefault();
-        $('#btnSettings-teamfolders').click();
+        $('#btnSettings-teamfolders-reports').click();
 
     });
 
+    formValidation('.frmSettings');
 
     document.getElementById('quickreports').addEventListener('submit', function (e) {
         e.preventDefault();
         submitForm(e);
     });
     
+    document.getElementById('my-team-folders').addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitForm(e);
+    });
+
     //select options updates
     for(var i = 0; i < 2; i++){
         // $('.bookmarks').eq(i).change(selectOptionChange);
@@ -361,9 +390,6 @@ function initialize(){
 
     loadFromLocalStorage();
 }
-
-
-
 
 
 
