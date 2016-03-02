@@ -49,7 +49,7 @@ function updateQuickActions (actions) {
     if (actions !== undefined) {
         for (var i = 0; i < actions.length; i++) {
             navSections[i].innerHTML = "<p>" + actions[i].label + "</p>" + navSections[i].innerHTML;
-            navSections[i].style.background = "black url(./img/icons/" + actions[i].icon + ".png)  left 50% top 65px no-repeat";
+            navSections[i].style.background = "black url(./img/icons/" + actions[i].icon + ".png)  left 50% top 70px no-repeat";
             navSections[i].addEventListener("focus", changeFocusNav, false);
             navSections[i].addEventListener("mouseleave", ignoreClick, false);
         }
