@@ -159,7 +159,7 @@ header > div.layout-wrap{
 
 }
 
-.notification p {
+.notifications p {
     margin-left: 10px;
 }
 
@@ -352,15 +352,12 @@ nav :last-child{
     margin-right: 0%;
 }
 
-
 .tabs li > a{
     display: block;
     color: #EBEBEB;
     text-decoration: none;
     font-size: 0.8rem;
 }
-
-
 
 .tab-active,.tab-active:hover{
     background-color:#EBEBEB !important;
@@ -375,131 +372,6 @@ nav :last-child{
     background: #ebebeb none repeat scroll 0 0;
 
 }
-
-
-
-/*.settings{
-    float: right;
-    cursor: pointer;
-    padding-left: 0.6em;
-    display: block;
-    text-align: center;
-    width: 26px;
-    height: 27px;
-    padding: 0.6em;
-    margin-right: 1.1em;
-
-}
-.settings img{
-    margin-top: 0.5em;
-}
-
-.settings:hover, .active{
-     background-color: #FFF !important;
-}
-
-#set{
-    display: none;
-}
-#set:checked ~ .reports-options-settings{
-    display: block;
-}
-
-.expand{
-    float: right;
-    cursor: pointer;
-    padding-right: 0.4em;
-    display: block;
-    margin-top: 0.5em;
-}
-.expand img{
-    margin-top: 0.8em;
-}
-
-.expand:hover{
-     background-color: #FFF !important;
-}
-
-*/
-
-
-/*.quick-reports-settings {
-    display: none;
-    margin-top: 1.5em;
-    background-color: white;
-    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
-    height: 270px;
-    width: 97%;
-    margin-left: 0.8em;
-    height: 218px;
-   
-}*/
-
-/*.form-feildset span{
-    color: rgb(60, 60, 60);
-}
-
-.form-settings{
-
-    margin-right: 0.5em;
-    margin-top: 0.7em;
-    display: inline-block;
-    margin-left: 0.5em;
-    width: inherit;
-    
-
-}
-
-.form-fieldset{
-    border:none;
-    background-color: #DCDADA;
-    margin-bottom: 0.6em;
-    height: 2em;
-    text-align: center;
-    padding-top: 1em;
-    margin-top: 0.2em;
-  
-}
-
-.rprt-wrapper{
-    margin-top: -0.4em;
-}
-
-
-
-.rprt-label{
-    margin-left: 3.5em;
-    color: rgb(60, 60, 60);;
-    padding-right: 0.2em;
-}
-
-.rprt-input{
-    border: none;
-    padding: 0 0 0 0.3em;
-    height: 2.3em;
-    outline: medium none;
-    font-size: 13px;
-    width:33%;
-}
-
-.form-footer{
-    float: right;
-    font-size: 0.9rem;
-    
-}
-
-.form-footer a {
-    color: black;
-    margin-right: 15px;
-}
-
-.form-footer input[type="submit"] {
-    background-color: black;
-    border: 0 none;
-    color: white;
-    height: 23px;
-    width: 80px;
-}*/
 
 .tab {
     background: #ebebeb none repeat scroll 0 0;
