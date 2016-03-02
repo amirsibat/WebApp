@@ -30,44 +30,49 @@ if (document.addEventListener) {
 
 };
 
+function updatePage(data){
+    updateNotification(data.notification);
+    updateQuickActions(data.actions);
+}
+
 
 function updateNotification (data) {
       if (data !== undefined) {
-        $(".notifications").innerHTML = "<p>" + data.notification + "</p>";
+        $(".notifications").innerHTML = "<p>" + data + "</p>";
         $(".notifications").classList.remove('hidden');
     } 
 }
 
 
-// function updateQuickActions (actions) {
-//      var navSections = all(".nav-section");
-//     if (actions !== undefined) {
-//         for (var i = 0; i < actions.length; i++) {
-//             navSections[i].innerHTML = "<p>" + actions[i].label + "</p>" + navSections[i].innerHTML;
-//             navSections[i].style.background = "black url(./img/icons/" + actions[i].icon + ".png)  left 50% top 77px no-repeat";
-//             navSections[i].addEventListener("focus", changeFocusNav, false);
-//             navSections[i].addEventListener("mouseleave", ignoreClick, false);
-//         }
-//         var menuCaptions = all(".menu-caption");
-//         for (i = 0; i < actions.length; i++) {
-//             menuCaptions[i].innerHTML = "<p>" + actions[i].actionsLabel + "</p>";
-//         }
-//         var g = 4;
-//         var q = 0;
-//         var actionLists = all(".action-list");
-//         for (i = 0; i < actions.length; i++) {
-//             for (var j = 0; j < actions[i].actions.length; j++) {
-//                 actionLists[i].innerHTML += "<li><a tabindex=\"" + g + "\" href=\"" + actions[i].actions[j].url + "\">" + quickActions[i].actions[j].label + "</a></li>";
-//                 g++;
-//                 //if (j+1 == actions[i].actions.length) {
-//                 all(".action-list li >a")[q].addEventListener("blur", changeFocus, false);
-//                 //}
-//                 q++;
-//             }
-//             g++;
-//         }
-//     }
-// }
+function updateQuickActions (actions) {
+     var navSections = all(".nav-section");
+    if (actions !== undefined) {
+        for (var i = 0; i < actions.length; i++) {
+            navSections[i].innerHTML = "<p>" + actions[i].label + "</p>" + navSections[i].innerHTML;
+            navSections[i].style.background = "black url(./img/icons/" + actions[i].icon + ".png)  left 50% top 65px no-repeat";
+            navSections[i].addEventListener("focus", changeFocusNav, false);
+            navSections[i].addEventListener("mouseleave", ignoreClick, false);
+        }
+        var menuCaptions = all(".menu-caption");
+        for (i = 0; i < actions.length; i++) {
+            menuCaptions[i].innerHTML = "<p>" + actions[i].actionsLabel + "</p>";
+        }
+        var g = 4;
+        var q = 0;
+        var actionLists = all(".action-list");
+        for (i = 0; i < actions.length; i++) {
+            for (var j = 0; j < actions[i].actions.length; j++) {
+                actionLists[i].innerHTML += "<li><a tabindex=\"" + g + "\" href=\"" + actions[i].actions[j].url + "\">" + quickActions[i].actions[j].label + "</a></li>";
+                g++;
+                //if (j+1 == actions[i].actions.length) {
+                all(".action-list li >a")[q].addEventListener("blur", changeFocus, false);
+                //}
+                q++;
+            }
+            g++;
+        }
+    }
+}
 
 
 function updatePageData(data){
@@ -333,7 +338,7 @@ function initialize(){
 
         //localStorage.clear();
      // UTILS.getDataRequest();
-    UTILS.ajax("data/config.json", {done: updateNotification});
+    UTILS.ajax("data/config.json", {done: updatePage});
 
     document.getElementById("btnSettings-quickreports").addEventListener('click', function(e){
        
