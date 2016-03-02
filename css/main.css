@@ -539,6 +539,7 @@ nav :last-child{
     width: 40px;
     height:40px;
     z-index: 1;
+    cursor: pointer;
 }
 
 .bookmarks{
@@ -660,6 +661,7 @@ nav :last-child{
     color: white;
     height: 30px;
     width: 100px;
+    cursor: pointer;
 }
 
 /* ==========================================================================

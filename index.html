@@ -108,11 +108,11 @@
                                         <span class="report-num">Reprot 01</span>
                                         <div class="input-wrapper rpt-name">
                                             <label class="rep-label" for="nameReport1">Name</label>
-                                            <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text" required>
+                                            <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text" >
                                         </div>
                                         <div class="input-wrapper rpt-url">
                                             <label class=" rep-label" for="urlReport1">URL</label>
-                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+" required>
+                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
                                         </div>
                                     </fieldset>
 
@@ -170,12 +170,12 @@
 
 			<div class="tab hidden" id="my-team-folders">
 				<div class="reports-options">
-                            <select class="bookmarks hidden" name="bookmarks" id="bookmarks-quickreports"  >
+                            <select class="bookmarks hidden" name="bookmarks" id="bookmarks-teamfolders-reports"  >
                             </select>
 
                             <div class="reports-options-buttons">
-                                <a class="btn-expand hidden expand-toleft" target="_blank" href="#" id="expand-quickreports">e</a>
-                                <button class="btn-settings" id="btnSettings-teamfolders">s</button>
+                                <a class="btn-expand hidden expand-toleft" target="_blank" href="#" id="expand-teamfolders-reports">e</a>
+                                <button class="btn-settings" id="btnSettings-teamfolders-reports">s</button>
                             </div>
                             <div id="team-folders-settings-form" class="settings hidden">
                                 <form class="frmSettings" id="teamfolders-reports" runat="server">
@@ -225,7 +225,7 @@
                             </div>
                         </div>
                         <div class="iframe-content content-my-team-folders">
-                            <iframe class="iframe iframe-teamfolders" id="teamfolders-frame" src="" frameborder="0"></iframe>
+                            <iframe class="iframe iframe-teamfolders-reports" id="teamfolders-frame" src="" frameborder="0"></iframe>
                         </div>
 			</div>
 
