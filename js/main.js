@@ -74,6 +74,21 @@ function updateQuickActions (actions) {
     }
 }
 
+var changeFocus = function (e) {
+    this.parentNode.parentNode.style.display = "none";
+};
+
+var changeFocusNav = function (e) {
+    this.querySelector(".action-list").style.display = "block";
+};
+
+var ignoreClick = function (e) {
+    if (document.activeElement === this) {
+        this.blur();
+        this.querySelector(".action-list").style.display = "none";
+    }
+};
+
 
 function updatePageData(data){
     updateNotification(data.notification);
