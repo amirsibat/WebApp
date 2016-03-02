@@ -62,7 +62,7 @@ function updateQuickActions (actions) {
         var actionLists = all(".action-list");
         for (i = 0; i < actions.length; i++) {
             for (var j = 0; j < actions[i].actions.length; j++) {
-                actionLists[i].innerHTML += "<li><a tabindex=\"" + g + "\" href=\"" + actions[i].actions[j].url + "\">" + quickActions[i].actions[j].label + "</a></li>";
+                actionLists[i].innerHTML += "<li><a tabindex=\"" + g + "\" href=\"" + actions[i].actions[j].url + "\">" + actions[i].actions[j].label + "</a></li>";
                 g++;
                 //if (j+1 == actions[i].actions.length) {
                 all(".action-list li >a")[q].addEventListener("blur", changeFocus, false);
