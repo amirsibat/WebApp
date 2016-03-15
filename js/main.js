@@ -144,10 +144,7 @@ function getActiveTabIndex(Tabs){
 
 
 
-function setIframe (val,id) {
-    $('.iframe-'+id).setAttribute( 'src' , val );
-    $('#expand-'+id).setAttribute( 'href', val );  
-}
+
 
 var selectOptionChange = function  (e) {
     e.preventDefault();
@@ -158,20 +155,20 @@ var selectOptionChange = function  (e) {
 }
 
 
-function showSelectButtonAndIframe (id) {
-     $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.toggle('hidden');
+
+function checkDuplicates(name,url){
+
+var usedNames = {};
+    var select = $("select > option");
+    for(var i in select) {
+  if(name == i.value) {
+     $(i).remove();
+ } else {
+     return 1;
+ }
 }
-
-function hideSelectButtonAndIframe (id) {
-    $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.toggle('hidden');
+    return 0;
 }
-
-
-
-
-
-
-
 
 
 function addSelectToDropDownList ($selectElement ,name,url) {
@@ -188,12 +185,12 @@ function setIframe (val,id) {
 
 
 function showSelectButtonAndIframe (id) {
-     $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.remove('hidden'); 
+     $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.toggle('hidden'); 
 }
 
 
-function hideSelectButtonAndIframe (argument) {
-    $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.add('hidden');
+function hideSelectButtonAndIframe (id) {
+    $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.toggle('hidden');
 }
 
 
@@ -216,6 +213,7 @@ function saveToLocalStorage () {
                 name = $inputsName[i].value;
                 nameElemId = $inputsName[i].getAttribute('id');
                 urlElemId = $inputsUrl[i].getAttribute('id');
+
 
                 arr.push({
                     formId: formId,
@@ -245,10 +243,12 @@ function loadFromLocalStorage () {
     if (typeof(Storage) !== "undefined") {
         var storageData = JSON.parse(localStorage.getItem('storage'));
 
+
         if(storageData !== null){
             for(var i=0; i<storageData.length; i++){
-                $('#'+storageData[i].nameElemId).valueOf(storageData[i].name);
-                $('#'+storageData[i].urlElemId).valueOf(storageData[i].url);
+                 $('#'+storageData[i].nameElemId).valueOf(storageData[i].name);
+                 $('#'+storageData[i].urlElemId).valueOf(storageData[i].url);
+               
             }
         }
 
@@ -288,6 +288,8 @@ function submitForm (e) {
 
             // check if not empty and add to bookmark
             if(name !== '' && url !== '' ){
+                    checkDuplicates(name,url);
+
                     addSelectToDropDownList($bookmark,name,url);
             }
             else{
@@ -321,28 +323,62 @@ function submitForm (e) {
 
 
 function formValidation(form){
-        var $form = $(form),
-            $inputsName = $form.querySelectorAll('input[type="text"]'),
-            $inputsUrl = $form.querySelectorAll('input[type="url"]');
 
-            for (var i = 0; i < $inputsName.length; i++) {
+        var returnVal = true;
+        var tmp = $(form).querySelectorAll('.input-wrapper');
+        var urlExp = new RegExp("https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}", i); 
+        var linkExp = new RegExp(/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/);
 
-            $inputsUrl[i].addEventListener('input', { inputsName: $inputsName, i: i } ,function(e) {
-                if( $(this).value != '' || $(this).value != null ) 
-                    e.data.inputsName[e.data.i].prop('required',true);
-                else
-                    e.data.inputsName[e.data.i].prop('required',false);
-            });
 
-            $inputsName[i].addEventListener('input', { inputsUrl: $inputsUrl, i: i } ,function(e) { 
-                if( $(this).value != '' || $(this).value != null )
-                    e.data.inputsUrl[e.data.i].prop('required',true);
-                else
-                    e.data.inputsUrl[e.data.i].prop('required',false);
-            });             
+            for(var i=0; i<tmp.length-1; i=i+2){
+        var name = tmp[i].children[1].value;
+        var url = tmp[i+1].children[1].value;
 
+
+
+        if(name!="" && url=="" ){
+            (tmp[i+1].children[1]).classList.add("error-input");
+            if(returnVal){
+                (tmp[i+1].children[1]).focus();
+                (tmp[i+1].children[1]).style.outline = "none";
             }
 
+            returnVal=false;
+        }
+
+        else if(name=="" && url!=""){
+            (tmp[i].children[1]).classList.add("error-input");
+            if(returnVal){
+                (tmp[i].children[1]).focus();
+                (tmp[i+1].children[1]).style.outline = "none";
+            }
+            returnVal=false;
+        }
+
+        else{
+            tmp[i].children[1].classList.remove("error-input");
+            tmp[i+1].children[1].classList.remove("error-input");
+        }
+
+        if(name!="" && url!="" && ( !urlExp.test(url) && !linkExp.test(url) ) ){
+            (tmp[i+1].children[1]).classList.add("error-input");
+            if(returnVal){
+                (tmp[i+1].children[1]).focus();
+                (tmp[i+1].children[1]).style.outline = "none";
+            }
+            returnVal=false;
+        }
+        if(!urlExp.test(url) && linkExp.test(url)){
+            var newURL = "http://www.";
+            newURL+=url;
+            tmp[i+1].children[1].value = newURL;
+            tmp[i+1].children[1].text = newURL;
+            returnVal=true;
+        }
+
+    }
+    return returnVal;
+           
 }
 
 
@@ -353,6 +389,7 @@ function initialize(){
 
         //localStorage.clear();
      // UTILS.getDataRequest();
+     
     UTILS.ajax("data/config.json", {done: updatePage});
 
     document.getElementById("btnSettings-quickreports").addEventListener('click', function(e){
@@ -390,17 +427,24 @@ function initialize(){
 
     });
 
-    formValidation('.frmSettings');
+    
 
     document.getElementById('quickreports').addEventListener('submit', function (e) {
         e.preventDefault();
-        submitForm(e);
+        if(formValidation('.frmSettings') == true){
+          submitForm(e);  
+        }
+        
     });
     
     document.getElementById('my-team-folders').addEventListener('submit', function (e) {
         e.preventDefault();
+        formValidation('.frmSettings');
         submitForm(e);
     });
+
+
+    
 
     //select options updates
     for(var i = 0; i < 2; i++){

@@ -111,6 +111,12 @@ body{
 }
 
 
+.error-input{
+    border: solid 1px #D8000C;
+}
+
+
+
 header{
     background: #000;
 }
@@ -508,7 +514,6 @@ nav :last-child{
     width: 70%;
 }
 .rep-input {
-    border: medium none;
     direction: ltr;
     font-size: 0.8rem;
     height: 32px;
