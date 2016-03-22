@@ -23,7 +23,8 @@
 			<a href="#"><img src="img/logo-netcraft.svg" alt="netcraft"></a>
 
 			<form class="search-box">
-				<input type="search" name="q" placeholder="search">
+                <label for="searchInput"><span class="hidden">s</span></label>
+				<input type="search" name="q" placeholder="search" id="searchInput">
 			</form>
 		</div>
 	</header>
@@ -91,51 +92,53 @@
                             </select>
 
                             <div class="reports-options-buttons">
-                                <a class="btn-expand expand-toleft hidden" target="_blank" href="#" id="expand-quickreports">e</a>
+                                <a class="btn-expand expand-toleft hidden" target="_blank" href="" id="expand-quickreports">e</a>
                                 <button class="btn-settings" id="btnSettings-quickreports">s</button>
                             </div>
                             <div id="quick-reports-settings-form" class="settings hidden">
-                                <form class="frmSettings" id="quickreports" runat="server">
+                                <form class="frmSettings" id="quickreports" onsubmit="return false;">
 
                                     <fieldset class="form-fieldset">
                                         <span class="report-num">Reprot 01</span>
-                                        <div class="input-wrapper rpt-name">
+                                        <div class="input-wrapper rpt-name" id="reports-data">
                                             <label class="rep-label" for="nameReport1">Name</label>
                                             <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text" >
+
                                         </div>
-                                        <div class="input-wrapper rpt-url">
+                                        <div class="input-wrapper rpt-url" id="reports-data">
                                             <label class=" rep-label" for="urlReport1">URL</label>
-                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url">
+                                            
+                                            <input class="rep-input url-input" type="text" id="urlReport1" placeholder=" Site Url" >
                                         </div>
                                     </fieldset>
 
                                     <fieldset class="form-fieldset">
                                         <span class="report-num">Reprot 02</span>
-                                        <div class="input-wrapper rpt-name">
+                                        <div class="input-wrapper rpt-name" id="reports-data">
                                             <label class=" rep-label" for="nameReport2">Name</label>
                                             <input class="rep-input" placeholder="Site Name" id="nameReport2" type="text" >
                                         </div>
-                                        <div class="input-wrapper rpt-url">
+                                        <div class="input-wrapper rpt-url" id="reports-data">
                                             <label class=" rep-label" for="urlReport2">URL</label>
-                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport2" type="url">
+                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport2" type="text">
                                         </div>
                                     </fieldset>
 
                                     <fieldset class="form-fieldset">
                                         <span class="report-num">Reprot 03</span>
-                                        <div class="input-wrapper rpt-name">
+                                        <div class="input-wrapper rpt-name" id="reports-data">
                                             <label class=" rep-label" for="nameReport3">Name</label>
                                             <input class="rep-input" placeholder="Site Name" id="nameReport3" type="text">
                                         </div>
-                                        <div class="input-wrapper rpt-url">
+                                        <div class="input-wrapper rpt-url" id="reports-data">
                                             <label class=" rep-label" for="urlReport3">URL</label>
-                                            <input type="url" class="rep-input url-input" id="urlReport3" placeholder="Site Url" >
+                                            <input type="text" class="rep-input url-input" id="urlReport3" placeholder="Site Url" >
                                         </div>
                                     </fieldset>
 
                                     <div class="form-footer">
                                         <a href="#" id="cancel-quick-reports">Cancel</a>
-                                        <input id="submit" value="Save" type="submit">
+                                        <input id="quickreports_submit" value="Save" type="submit">
                                     </div>
                                     
                                 </form>
@@ -151,7 +154,7 @@
 			<div  class="tab hidden" id="my-folders">
 				<div class="tab-content">
 						<div class="reports-options-buttons">
-                             <a class="btn-expand expand-toleft expand-right-corner" target="_blank" href="http://www.paulirish.com/" id="expand-quickreports">e</a>
+                             <a class="btn-expand expand-toleft expand-right-corner" target="_blank" href="http://www.paulirish.com/" >e</a>
                              </div>
 						<div class="iframe-content">
 	                            <iframe class="iframe iframe-myfolders" src="http://www.paulirish.com/" id="myfolders-frame" frameborder="0" name="iframe"></iframe>
@@ -161,57 +164,57 @@
 
 
 
-			<div class="tab hidden" id="my-team-folders">
+		<div class="tab hidden" id="my-team-folders">
 				<div class="reports-options">
                             <select class="bookmarks hidden" name="bookmarks" id="bookmarks-teamfolders-reports"  >
                             </select>
 
                             <div class="reports-options-buttons">
-                                <a class="btn-expand hidden expand-toleft" target="_blank" href="#" id="expand-teamfolders-reports">e</a>
+                                <a class="btn-expand hidden expand-toleft" target="_blank" href="" id="expand-teamfolders-reports">e</a>
                                 <button class="btn-settings" id="btnSettings-teamfolders-reports">s</button>
                             </div>
                             <div id="team-folders-settings-form" class="settings hidden">
-                                <form class="frmSettings" id="teamfolders-reports" runat="server">
+                                <form class="frmSettings" id="teamfolders-reports">
 
-                                    <fieldset class="form-fieldset">
-                                        <span class="report-num">Reprot 01</span>
-                                        <div class="input-wrapper rpt-name">
-                                            <label class=" rep-label" for="nameReport1">Name</label>
-                                            <input class="rep-input" placeholder="Site Name" id="nameReport1" type="text">
+                                    <fieldset class="form-fieldset" >
+                                        <span class="report-num">Folder 01</span>
+                                        <div class="input-wrapper rpt-name" id="teamFolders-data">
+                                            <label class=" rep-label" for="folderName1">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="folderName1" type="text">
                                         </div>
-                                        <div class="input-wrapper rpt-url">
-                                            <label class=" rep-label" for="urlReport1">URL</label>
-                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport1" type="url" pattern="https?://.+">
+                                        <div class="input-wrapper rpt-url" id="teamFolders-data">
+                                            <label class=" rep-label" for="folderUrl1">URL</label>
+                                            <input class="rep-input url-input" placeholder="Site Url" id="folderUrl1" type="text">
                                         </div>
                                     </fieldset>
 
                                     <fieldset class="form-fieldset">
-                                        <span class="report-num">Reprot 02</span>
-                                        <div class="input-wrapper rpt-name">
-                                            <label class=" rep-label" for="nameReport2">Name</label>
-                                            <input class="rep-input" placeholder="Site Name" id="nameReport2" type="text">
+                                        <span class="report-num">Folder 02</span>
+                                        <div class="input-wrapper rpt-name" id="teamFolders-data">
+                                            <label class=" rep-label" for="folderName2">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="folderName2" type="text">
                                         </div>
-                                        <div class="input-wrapper rpt-url">
-                                            <label class=" rep-label" for="urlReport2">URL</label>
-                                            <input class="rep-input url-input" placeholder="Site Url" id="urlReport2" type="url" pattern="https?://.+">
+                                        <div class="input-wrapper rpt-url" id="teamFolders-data">
+                                            <label class=" rep-label" for="folderUrl2">URL</label>
+                                            <input class="rep-input url-input" placeholder="Site Url" id="folderUrl2" type="text">
                                         </div>
                                     </fieldset>
 
                                     <fieldset class="form-fieldset">
-                                        <span class="report-num">Reprot 03</span>
-                                        <div class="input-wrapper rpt-name">
-                                            <label class=" rep-label" for="nameReport3">Name</label>
-                                            <input class="rep-input" placeholder="Site Name" id="nameReport3" type="text">
+                                        <span class="report-num">Folder 03</span>
+                                        <div class="input-wrapper rpt-name" id="teamFolders-data">
+                                            <label class=" rep-label" for="folderName3">Name</label>
+                                            <input class="rep-input" placeholder="Site Name" id="folderName3" type="text">
                                         </div>
-                                        <div class="input-wrapper rpt-url">
-                                            <label class=" rep-label" for="urlReport3">URL</label>
-                                            <input type="url" class="rep-input url-input" id="urlReport3" placeholder="Site Url" pattern="https?://.+">
+                                        <div class="input-wrapper rpt-url" id="teamFolders-data">
+                                            <label class=" rep-label" for="folderUrl3">URL</label>
+                                            <input type="text" class="rep-input url-input" id="folderUrl3" placeholder="Site Url">
                                         </div>
                                     </fieldset>
 
                                     <div class="form-footer">
                                         <a href="#" id="cancel-team-folders">Cancel</a>
-                                        <input id="submit" value="Save" type="submit">
+                                        <input id="teamfolders-reports_submit" value="Save" type="submit">
                                     </div>
                                     
                                 </form>
@@ -220,7 +223,7 @@
                         <div class="iframe-content content-my-team-folders">
                             <iframe class="iframe iframe-teamfolders-reports" id="teamfolders-frame" src="" frameborder="0"></iframe>
                         </div>
-			</div>
+			</div> 
 
 			<div class="tab hidden" id="public-folders">
 				<div class="tab-content">

@@ -30,6 +30,156 @@ if (document.addEventListener) {
 
 };
 
+
+//search in webapp
+function search(data){
+
+    var selReports = $("#bookmarks-quickreports");
+
+    for(var i=0; i<selReports.options.length; i++){
+        if(selReports.options[i].text == data ||
+            selReports.options[i].text.search(data)!=-1){
+            reloadTab("#quick-reports");
+            var newLinkIndex = selReports.options[i].index;
+            selReports.selectedIndex = newLinkIndex;
+            changeIFrame();
+            return true;
+        }
+    }
+
+    selReports = $("#bookmarks-teamfolders-reports");
+
+    for(var i=0; i<selReports.options.length; i++){
+        if(selReports.options[i].text == data ||
+            selReports.options[i].text.search(data)!=-1){
+            reloadTab("#my-team-folders");
+            var newLinkIndex = selReports.options[i].index;
+            selReports.selectedIndex = newLinkIndex;
+            changeIFrame();
+            return true;
+        }
+    }
+    return false;
+}
+
+//search event
+document.getElementById("searchInput").addEventListener('search', function(e){
+            var data = document.getElementById("searchInput").value;
+            if(!search(data)){
+                var result = "The searched report " + data + " was not found."
+                updateNotificationArea(result);
+                return;
+            }
+    });
+
+
+// change active tab with arrows keyboard
+document.addEventListener('keyup' , function(e){
+    var active = window.location.hash;
+    var cod = e.keyCode;
+    //Left
+    if(e.keyCode == 37){
+        LeftArrowTabEvent(active);
+    }
+    //Right
+    if(e.keyCode == 39){
+        RightArrowTabEvent(active);
+    }
+});
+
+//save last selected tab
+function saveLastSelectedTab(data){
+    localStorage.setItem("lastTab", data);
+}
+
+
+function reloadTab(data){
+    var tabsList = document.getElementsByClassName("tabs-links");
+
+    window.location.hash = data;
+
+    for (var i = 0; i < tabsList.length; i++) {
+        if (tabsList[i].hash == data) {
+          parent=tabsList[i].parentNode;
+          // set the tab toggle class to be active-tab
+          parent.className+=' tab-active';
+          // tabsList[i].children[0].classList.add("active-tab-icon");
+          tabsList[i].style.color = "black";
+        } 
+        else {
+          // remove the tab-active class from the other tabs
+          parent=tabsList[i].parentNode;
+          parent.className='';
+          // hide the other tabs content
+            $(tabsList[i].hash).classList.add('hidden');
+            // tabsList[i].children[0].classList.remove("active-tab-icon");
+            tabsList[i].style.color = "white";
+        }
+      }
+    // show current tab content
+     $(data).classList.remove('hidden');
+     saveLastSelectedTab(data);
+
+}
+
+
+
+
+//left arror action
+function LeftArrowTabEvent(data){
+    if(data == "#quick-reports")
+        return;
+    else if(data == "#my-folders")
+        reloadTab("#quick-reports");
+    else if(data == "#my-team-folders")
+        reloadTab("#my-folders");
+    else if(data == "#public-folders")
+        reloadTab("#my-team-folders");
+}
+
+//right arrow action
+function RightArrowTabEvent(data){
+    if(data == "#public-folders")
+        return;
+    else if(data == "#my-team-folders")
+        reloadTab("#public-folders");
+    else if(data == "#my-folders")
+        reloadTab("#my-team-folders");
+    else if(data == "#quick-reports")
+        reloadTab("#my-folders");
+}
+
+// Enter/Esc events
+$("#quickreports").addEventListener('keyup' , function(e){
+    //Enter
+    if(e.keyCode == 13){
+        submitForm("#quickreports");
+        return;
+    }
+    //ESC
+    if(e.keyCode == 27){
+        $("#quickreports").classList.toggle("hidden");
+        return;
+    }
+});
+
+//Enter/Esc events
+$("#teamfolders-reports").addEventListener('keyup' , function(e){
+   
+    //Enter
+    if(e.keyCode == 13){
+        submitForm("#teamfolders-reports");
+        return;
+    }
+     //ESC
+    if(e.keyCode == 27){
+        $("#teamfolders-reports").classList.toggle("hidden");
+        return;
+    }
+});
+
+
+
 function updatePage(data){
     updateNotification(data.notification);
     updateQuickActions(data.quickActions);
@@ -43,6 +193,11 @@ function updateNotification (data) {
     } 
 }
 
+//update notifications area -- for search results
+function updateNotificationArea(data){
+    if(data != undefined)
+        $(".notifications").innerHTML = data;
+}
 
 function updateQuickActions (actions) {
      var navSections = all(".nav-section");
@@ -90,10 +245,7 @@ var ignoreClick = function (e) {
 };
 
 
-function updatePageData(data){
-    updateNotification(data.notification);
-    updateQuickActions(data.quickActions);
-}
+
 
 
 
@@ -145,30 +297,16 @@ function getActiveTabIndex(Tabs){
 
 
 
+// //====================================================================
+// var selectOptionChange = function (e) {
+//     e.preventDefault();
+//     var target = e.target;
+//     var optionValue = target.options[target.selectedIndex].value;
+//     var id = $('#'+target.id).parentNode.parentNode.querySelectorAll("form")[0].getAttribute('id');
+//     setIframe(optionValue,id);
+// }
+// //====================================================================
 
-var selectOptionChange = function  (e) {
-    e.preventDefault();
-    var target = e.target;
-    var optionValue = target.options[target.selectedIndex].value;
-    var id = $('#'+target.id).parentNode.parentNode.querySelectorAll("form")[0].getAttribute('id');
-    setIframe(optionValue,id);
-}
-
-
-
-function checkDuplicates(name,url){
-
-var usedNames = {};
-    var select = $("select > option");
-    for(var i in select) {
-  if(name == i.value) {
-     $(i).remove();
- } else {
-     return 1;
- }
-}
-    return 0;
-}
 
 
 function addSelectToDropDownList ($selectElement ,name,url) {
@@ -178,159 +316,324 @@ function addSelectToDropDownList ($selectElement ,name,url) {
         $selectElement.appendChild($option);
 }
 
-function setIframe (val,id) {
-    $('.iframe-'+id).setAttribute( 'src' , val );
-    $('#expand-'+id).setAttribute( 'href', val );  
-}
+// function setIframe (val,id) {
+//     $('.iframe-'+ id).setAttribute( 'src' , val );
+//     $('#expand-'+id).setAttribute( 'href', val );  
+// }
 
 
 function showSelectButtonAndIframe (id) {
-     $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.toggle('hidden'); 
+     $('#bookmarks-' + id).classList.remove('hidden'); 
+      $('#expand-' + id).classList.remove('hidden'); 
 }
 
 
 function hideSelectButtonAndIframe (id) {
-    $('#bookmarks-' + id + ', .content-' + id + ', #expand-' + id).classList.toggle('hidden');
+    $('#bookmarks-' + id).classList.add('hidden'); 
+    $('#expand-' + id).classList.add('hidden'); 
 }
 
 
-function saveToLocalStorage () {
-     if (typeof(Storage) !== "undefined"){
+//update the inputs in form when the form is open
+function loadLocalData(){
 
-            var arr = [];
-            var $frmsettings =  document.getElementsByClassName('frmSettings');
-
-            Array.prototype.forEach.call( $frmsettings, function(index, element){
-                
-                $inputsName = this.all('input[type="text"]'),
-                $inputsUrl = this.all('input[type="url"]');
-
-                var formId = $frmsettings[0].getAttribute('id');
-                
-                for (var i = 0; i < $inputsName.length; i++) {
-
-                url = $inputsUrl[i].value;
-                name = $inputsName[i].value;
-                nameElemId = $inputsName[i].getAttribute('id');
-                urlElemId = $inputsUrl[i].getAttribute('id');
-
-
-                arr.push({
-                    formId: formId,
-                    name: name,
-                    url: url,
-                    nameElemId: nameElemId,
-                    urlElemId : urlElemId
-                });
-
-
-                }
-
-
-            
-            });
-
-            localStorage.setItem('storage', JSON.stringify(arr));
-
+    var formData = JSON.parse(localStorage.getItem("FormData"));
+    if(formData == null) return;
+    for(var i=0; i<formData.length; i++){
+        var reportsNumber = 1;
+        var foldersNumber = 1;
+        if(formData[i].formId == "ReportsForm"){
+            var inputName = "#nameReport"+reportsNumber;
+            var inputURL = "#urlReport"+reportsNumber;
+            $(inputName).value = formData[i].name;
+            $(inputURL).value = formData[i].url;
+            reportsNumber++;
         }
+
+        if(formData[i].formId == "MyTeamFoldersForm"){
+            var inputName = "#folderName"+foldersNumber;
+            var inputURL = "#folderUrl"+foldersNumber;
+            $(inputName).value = formData[i].name;
+            $(inputURL).value = formData[i].url;
+            foldersNumber++;
+        }
+    }
+}
+
+
+//reload last selected tab
+function reloadLastTab(){
+    var tabName = localStorage.getItem("lastTab");
+    if(tabName == null)
+        reloadTab("#quick-reports");
+    else if(tabName != "")
+        reloadTab(tabName);
+}
+
+
+
+//update the saved links in select element
+function updateSelect(data) {
+        var formData = JSON.parse(localStorage.getItem("FormData"));
+        if(formData == null) return;
+        if(data == "#my-team-folders"){
+            var selectReports = $("#bookmarks-teamfolders-reports");
+            for(var i=0; i<formData.length; i++){
+                var formId = formData[i].formId;
+
+                if(formId == "MyTeamFoldersForm"){
+                    var val = formData[i].name;
+                    if(val != "") $("#bookmarks-teamfolders-reports").classList.remove("hidden");
+                    var myOption = document.createElement("option");
+                    myOption.text = val;
+                    myOption.value = val; 
+                    selectReports.appendChild(myOption);
+                }   
+            }   
+        }
+
         else{
-            console.log("Browser doesn't support local storage")
+                var selectReports = $("#bookmarks-quickreports");
+                for(var i=0; i<formData.length; i++){
+                    var formId = formData[i].formId;
+                    if(formId == "ReportsForm"){
+                        var val = formData[i].name;
+                        if(val != "") $("#bookmarks-quickreports").classList.remove("hidden");
+                        var myOption = document.createElement("option");
+                        myOption.text = val;
+                        myOption.value = val;
+                        selectReports.appendChild(myOption);
+                    }
+                }   
         }
+
+        changeIFrame();
 }
 
 
-function loadFromLocalStorage () {
-    if (typeof(Storage) !== "undefined") {
-        var storageData = JSON.parse(localStorage.getItem('storage'));
 
+//change the iframe link
+function changeIFrame() {
+   var activeTab = location.hash;
+    var newURL;
+    var selReports;
+    var iframeWindow;
+    var selectedValue;
+    var formData = JSON.parse(localStorage.getItem("FormData"));
 
-        if(storageData !== null){
-            for(var i=0; i<storageData.length; i++){
-                 $('#'+storageData[i].nameElemId).valueOf(storageData[i].name);
-                 $('#'+storageData[i].urlElemId).valueOf(storageData[i].url);
-               
+    if(activeTab == "#my-team-folders"){
+        selReports = $("#bookmarks-teamfolders-reports");
+        selectedValue = selReports.value;
+        for(var i=0; i<formData.length; i++){
+            if(formData[i].name == selectedValue){
+                newURL = formData[i].url;
+                iframeWindow = $("#teamfolders-frame");
+                iframeWindow.src = newURL;
+                $("#expand-teamfolders-reports").href = newURL;
+            }
+        }       
+    }
+    else{
+        selReports = $("#bookmarks-quickreports");
+        selectedValue = selReports.value;
+        for(var i=0; i<formData.length; i++){
+            if(formData[i].name == selectedValue){
+                newURL = formData[i].url;
+                iframeWindow = $("#quickreports-frame");
+                iframeWindow.src = newURL;
+                $("#expand-quickreports").href = newURL;
             }
         }
+    }   
+}
 
 
-
+//upload iframe
+function frameUpload(){
+    var s1 = $("#bookmarks-quickreports");
+    var s2 = $("#bookmarks-teamfolders-reports");
+    var formData = JSON.parse(localStorage.getItem("FormData"));
+    if(formData == null) return;
+    if(s1.options.length > 0){
+        for(var i=0; i<formData.length; i++){
+            if(formData[i].formId == "ReportsForm"){
+                $("#quickreports-frame").classList.remove("hidden");
+                $("#quickreports-frame").src = formData[i].url;
+                break;
+            }
         }
-        else{
-            console.log("Browser doesn't support local storage")
+    }
+
+    if(s1.options.length > 0){
+        for(var i=0; i<formData.length; i++){
+            if(formData[i].formId == "myTeamFolders"){
+                $("#teamfolders-frame").classList.remove("hidden");
+                $("#teamfolders-frame").src = formData[i].url;
+                break;
+            }
         }
+    }
 }
 
 
 
-function submitForm (e) {
-     e.preventDefault();
-     var $form = e.target,
-            $bookmark = all('#bookmarks-' + $form.getAttribute('id'))[0],
-            $inputsName = $form.querySelectorAll('input[type="text"]'),
-            $inputsUrl = $form.querySelectorAll('input[type="url"]');
+//====================================================================
+function isInputsNull(data){
+    var arr = [];
+    var returnVal = true;
+    var frame;
+
+    if(data == "#my-team-folders"){
+        arr = all("#teamFolders-data");
+        frame = $("#teamfolders-frame");
+    }
+    else{
+        arr = all("#reports-data");
+        frame = $("#quickreports-frame");
+    }
+
+    for(var i =0; i<arr.length; i++){
+        var text = arr[i].children[1].value;
+        if(text != ""){
+            returnVal = false;
+        }
+    }
+    var d = frame.src;
+
+    if(returnVal)
+        frame.src = "";
+    return returnVal;
+}
+//====================================================================
+
+//====================================================================
+function clearSelect(data){
+    var selectReports;
+    if(data == "#my-team-folders"){
+        selectReports = $("#bookmarks-teamfolders-reports");
+    }
+    else{
+        selectReports = $("#bookmarks-quickreports");
+    }
+
+    for(var i=0; i<=selectReports.childNodes.length; i++){
+            selectReports.remove(selectReports.i);
+    }
+}
+//====================================================================
+
+function clearLocalStorage(data){
+
+    var formData = JSON.parse(localStorage.getItem("FormData"));
+    localStorage.removeItem("FormData");
+
+    var formId = "ReportsForm";
+    if(data == "#my-team-folders")
+        formId = "MyTeamFoldersForm";
+    var j=0;
+    for(var i=0; i<formData.length; i++){
+        if(formData[i].formId == formId)
+            j++;
+    }
+
+    if(data == "#my-team-folders"){
+        for(var i=0; i<j; i++)
+            formData.pop();
+    }
+    else{
+        formData.splice(0,j);
+    }
+    localStorage.setItem('FormData', JSON.stringify(formData));
+}
+
+
+
+
+
+//save links from forms to localStorage with key formData
+function saveLinks() {
+    var activeTab = location.hash;
+    var links = [];
+    var tmp = [];
+    var selectName;
+    var selecetURL;
     
-            var nameVal , urlVal, emptyCounter = 0;
-            
-            //reset bookmark
-             if($bookmark.length != 0){
-             for (var i=0; i<$bookmark.length; i++){
-                    $bookmark.options.remove(i);
-                }
+    clearSelect(activeTab);
+    
+    tmp = all("#reports-data");
 
-            }
+    for(var i=0; i<tmp.length-1; i=i+2){
+        var name = tmp[i].children[1].value;
+        var url = tmp[i+1].children[1].value;
+        if(name != "" && url != ""){
+            links.push({
+                formId:"ReportsForm" ,
+                name:name ,
+                url:url
+            });
+        }       
+    }
 
+    tmp = all("#teamFolders-data");
+    
+    for(var i=0; i<tmp.length-1; i=i+2){
+        var name = tmp[i].children[1].value;
+        var url = tmp[i+1].children[1].value;
+        
+        if(name != "" && url != ""){
+            links.push({
+                formId:"MyTeamFoldersForm" ,
+                name:name ,
+                url:url
+            });
+        }
+    }
 
+    localStorage.setItem('FormData', JSON.stringify(links));
 
-            for (var i = 0; i < $inputsName.length; i++) {
-            url = $inputsUrl[i].value;
-            name = $inputsName[i].value;
-            
+    updateSelect(activeTab);
+}
 
-            // check if not empty and add to bookmark
-            if(name !== '' && url !== '' ){
-                    checkDuplicates(name,url);
+//delete links from localStorage
+function deleteLinksFromLocalStorage(data){
 
-                    addSelectToDropDownList($bookmark,name,url);
-            }
-            else{
-                emptyCounter++;
-            }
+    var formData = JSON.parse(localStorage.getItem("FormData"));
+    localStorage.removeItem("FormData");
 
-            }// end for
+    var formId = "ReportsForm";
+    if(data == "#my-team-folders")
+        formId = "MyTeamFoldersForm";
+    var j=0;
+    for(var i=0; i<formData.length; i++){
+        if(formData[i].formId == formId)
+            j++;
+    }
 
-            // show bookmark - iframe - expand in case emptyCounter is not zero
-                if(emptyCounter != 3){
-
-                    $bookmark.focus();
-                         setIframe( $bookmark.getElementsByTagName("option")[0].attributes[0].value, $form.getAttribute('id'));
-                    $('#btnSettings-'+ $form.getAttribute('id')).click();
-                        showSelectButtonAndIframe($form.getAttribute('id'));
-                }
-                else{
-                    // $bookmark.find('option').remove();
-                        for (var i=0; i<$bookmark.length; i++){
-                                $bookmark.options.remove(i);
-                          }
-                        hideSelectButtonAndIframe($form.getAttribute('id'));
-                }
-
-            saveToLocalStorage();
-
-            return true;
-
-
+    if(data == "#my-team-folders"){
+        for(var i=0; i<j; i++)
+            formData.pop();
+    }
+    else{
+        formData.splice(0,j);
+    }
+    localStorage.setItem('FormData', JSON.stringify(formData));
 }
 
 
-function formValidation(form){
+//check if inputs in form are valid
+function isValid(data){
+    var returnVal = true;
+    var links = [];
+    var tmp = [];
+    var urlExp = new RegExp("https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}", i); 
+    var linkExp = new RegExp(/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/);
+    if(data == "quick-reports")
+        tmp = all(".reports-data");
+    else{
+        tmp = all(".teamFolders-data");
+    }
 
-        var returnVal = true;
-        var tmp = $(form).querySelectorAll('.input-wrapper');
-        var urlExp = new RegExp("https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}", i); 
-        var linkExp = new RegExp(/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/);
-
-
-            for(var i=0; i<tmp.length-1; i=i+2){
+    for(var i=0; i<tmp.length-1; i=i+2){
         var name = tmp[i].children[1].value;
         var url = tmp[i+1].children[1].value;
 
@@ -350,7 +653,7 @@ function formValidation(form){
             (tmp[i].children[1]).classList.add("error-input");
             if(returnVal){
                 (tmp[i].children[1]).focus();
-                (tmp[i+1].children[1]).style.outline = "none";
+                (tmp[i].children[1]).style.outline = "none";
             }
             returnVal=false;
         }
@@ -368,6 +671,13 @@ function formValidation(form){
             }
             returnVal=false;
         }
+        if(url.slice(0,4) == "www."){
+            var newURL = "http://";
+            newURL+=url;
+            tmp[i+1].children[1].value = newURL;
+            tmp[i+1].children[1].text = newURL;
+            returnVal=true;
+        }
         if(!urlExp.test(url) && linkExp.test(url)){
             var newURL = "http://www.";
             newURL+=url;
@@ -376,24 +686,156 @@ function formValidation(form){
             returnVal=true;
         }
 
+
     }
     return returnVal;
-           
+}
+//====================================================================
+function submitForm(data){
+    
+    if(data == "#my-team-folders"){
+        if( isInputsNull("#my-team-folders") ){
+            clearSelect("#my-team-folders");
+            clearLocalStorage("#my-team-folders");
+            $('#btnSettings-teamfolders-reports').click();
+            $("#bookmarks-teamfolders-reports").classList.add("hidden");
+            $("#teamfolders-frame").classList.add("hidden");
+            toggleExpandBtn();
+            return;
+        }
+        if(isValid("my-team-folders") == true){
+            saveLinks();
+            $('#btnSettings-teamfolders-reports').click();
+            $("#bookmarks-teamfolders-reports").classList.remove("hidden");
+            $("#teamfolders-frame").classList.remove("hidden");
+        }
+    }
+
+    else{
+        if( isInputsNull("#quick-reports") ){
+            clearSelect("#quick-reports");
+            deleteLinksFromLocalStorage("#quick-reports");
+           // $("#quick-reports-settings-form").classList.toggle("hidden");
+            $('#btnSettings-quickreports').click();
+            $("#bookmarks-quickreports").classList.add("hidden");
+            $("#quickreports-frame").classList.add("hidden");
+            toggleExpandBtn();
+            return;
+        }
+        if(isValid("quick-reports") == true){
+            saveLinks();
+            //$("#quick-reports-settings-form").classList.toggle("hidden");
+            $('#btnSettings-quickreports').click();
+            $("#bookmarks-quickreports").classList.remove("hidden");
+            $("#quickreports-frame").classList.remove("hidden");
+        }
+    }
+
+    toggleExpandBtn();
 }
 
 
+//toggle expand button with frame
+function toggleExpandBtn(){
+    if( $("#bookmarks-quickreports").options.length == 0){
+        $("#expand-quickreports").classList.add("hidden");
+    }else{
+        $("#expand-quickreports").classList.remove("hidden");
+    }
 
+    if($("#bookmarks-teamfolders-reports").options.length == 0){
+        $("#expand-teamfolders-reports").classList.add("hidden");
+    }else{
+        $("#expand-teamfolders-reports").classList.remove("hidden");
+    }
+}
+
+function formValidation(data){
+    var returnVal = true;
+    var links = [];
+    var tmp = [];
+    var urlExp = new RegExp("https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}", i); 
+    var linkExp = new RegExp(/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/);
+    if(data == "quick-reports")
+        tmp = all("#reports-data");
+    else{
+        tmp = all("#teamFolders-data");
+    }
+
+    for(var i=0; i<tmp.length-1; i=i+2){
+        var name = tmp[i].children[1].value;
+        var url = tmp[i+1].children[1].value;
+
+
+
+        if(name!="" && url=="" ){
+            (tmp[i+1].children[1]).classList.add("error-input");
+            if(returnVal){
+                (tmp[i+1].children[1]).focus();
+                (tmp[i+1].children[1]).style.outline = "none";
+            }
+
+            returnVal=false;
+        }
+
+        else if(name=="" && url!=""){
+            (tmp[i].children[1]).classList.add("error-input");
+            if(returnVal){
+                (tmp[i].children[1]).focus();
+                (tmp[i].children[1]).style.outline = "none";
+            }
+            returnVal=false;
+        }
+
+        else{
+            tmp[i].children[1].classList.remove("error-input");
+            tmp[i+1].children[1].classList.remove("error-input");
+        }
+
+        if(name!="" && url!="" && ( !urlExp.test(url) && !linkExp.test(url) ) ){
+            (tmp[i+1].children[1]).classList.add("error-input");
+            if(returnVal){
+                (tmp[i+1].children[1]).focus();
+                (tmp[i+1].children[1]).style.outline = "none";
+            }
+            returnVal=false;
+        }
+        if(url.slice(0,4) == "www."){
+            var newURL = "http://";
+            newURL+=url;
+            tmp[i+1].children[1].value = newURL;
+            tmp[i+1].children[1].text = newURL;
+            returnVal=true;
+        }
+        if(!urlExp.test(url) && linkExp.test(url)){
+            var newURL = "http://www.";
+            newURL+=url;
+            tmp[i+1].children[1].value = newURL;
+            tmp[i+1].children[1].text = newURL;
+            returnVal=true;
+        }
+
+
+    }
+    return returnVal;
+
+
+
+
+}
 
 
 function initialize(){
 
-        //localStorage.clear();
+      //localStorage.clear();
      // UTILS.getDataRequest();
      
     UTILS.ajax("data/config.json", {done: updatePage});
+    
+
 
     document.getElementById("btnSettings-quickreports").addEventListener('click', function(e){
-       
+        e.preventDefault();
         $("#btnSettings-quickreports").classList.toggle('active') ;
         // show the feildset content
         $("#quick-reports-settings-form").classList.toggle('hidden');
@@ -404,15 +846,14 @@ function initialize(){
     });
 
      document.getElementById("btnSettings-teamfolders-reports").addEventListener('click', function(e){
-       
+        e.preventDefault();
         $("#btnSettings-teamfolders-reports").classList.toggle('active') ;
         // show the feildset content
         $("#team-folders-settings-form").classList.toggle('hidden');
-
-
-
-        
-    });
+         // Set initial focus
+        document.getElementById("folderName1").focus();
+ 
+     });
 
      // quick reports setting cancel 
     document.getElementById("cancel-quick-reports").addEventListener('click',function(e){
@@ -420,6 +861,8 @@ function initialize(){
         $('#btnSettings-quickreports').click();
 
     });
+
+
     // my team folders setting cancel 
     document.getElementById("cancel-team-folders").addEventListener('click',function(e){
         e.preventDefault();
@@ -427,32 +870,43 @@ function initialize(){
 
     });
 
-    
 
-    document.getElementById('quickreports').addEventListener('submit', function (e) {
+    document.getElementById("quickreports").addEventListener('submit', function (e) {
         e.preventDefault();
-        if(formValidation('.frmSettings') == true){
-          submitForm(e);  
+
+        if(formValidation('quick-reports') == true){
+         submitForm("#quickreports");
         }
         
     });
     
-    document.getElementById('my-team-folders').addEventListener('submit', function (e) {
+    document.getElementById('teamfolders-reports_submit').addEventListener('click', function (e) {
         e.preventDefault();
-        formValidation('.frmSettings');
-        submitForm(e);
+
+        if(formValidation('my-team-folders') == true){
+        submitForm("#my-team-folders");
+       }
     });
 
 
     
+   document.getElementById("bookmarks-quickreports").addEventListener('change', function(e){
+        changeIFrame();
+    });
 
-    //select options updates
-    for(var i = 0; i < 2; i++){
-        // $('.bookmarks').eq(i).change(selectOptionChange);
-        all('.bookmarks')[i].addEventListener('change', selectOptionChange);
-    }
+    document.getElementById("bookmarks-teamfolders-reports").addEventListener('change', function(e){
+        changeIFrame();
+    });
 
-    loadFromLocalStorage();
+
+    reloadLastTab();
+    updateSelect("#quick-reports");
+    updateSelect("#my-team-folders");
+    toggleExpandBtn();
+    frameUpload();
+    loadLocalData();
+
+
 }
 
 
