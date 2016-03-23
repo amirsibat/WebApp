@@ -150,7 +150,7 @@ function RightArrowTabEvent(data){
 }
 
 // Enter/Esc events
-$("#quickreports").addEventListener('keyup' , function(e){
+$("#quickreports").addEventListener('keydown' , function(e){
     //Enter
     if(e.keyCode == 13){
         submitForm("#quickreports");
@@ -164,7 +164,7 @@ $("#quickreports").addEventListener('keyup' , function(e){
 });
 
 //Enter/Esc events
-$("#teamfolders-reports").addEventListener('keyup' , function(e){
+$("#teamfolders-reports").addEventListener('keydown' , function(e){
    
     //Enter
     if(e.keyCode == 13){
@@ -271,7 +271,7 @@ var set_tab = function(){
       }
     // show current tab content
      $(current).classList.remove('hidden');
-
+     saveLastSelectedTab(current);
 
 };
 
@@ -831,7 +831,12 @@ function initialize(){
      // UTILS.getDataRequest();
      
     UTILS.ajax("data/config.json", {done: updatePage});
-    
+    reloadLastTab();
+    updateSelect("#quick-reports");
+    updateSelect("#my-team-folders");
+    toggleExpandBtn();
+    frameUpload();
+    loadLocalData();
 
 
     document.getElementById("btnSettings-quickreports").addEventListener('click', function(e){
@@ -899,12 +904,7 @@ function initialize(){
     });
 
 
-    reloadLastTab();
-    updateSelect("#quick-reports");
-    updateSelect("#my-team-folders");
-    toggleExpandBtn();
-    frameUpload();
-    loadLocalData();
+    
 
 
 }
